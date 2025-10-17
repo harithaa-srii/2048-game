@@ -49,6 +49,7 @@ const App: React.FC = () => {
     }));
   }, [boardSize]);
 
+  // Keyboard arrow key support
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (gameState.gameOver || gameState.gameWon || modal.show) return;
@@ -74,6 +75,49 @@ const App: React.FC = () => {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [gameState, modal]);
+
+  // Touch swipe support for mobile
+  useEffect(() => {
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    function handleTouchStart(e: TouchEvent) {
+      const touch = e.touches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+    }
+
+    function handleTouchEnd(e: TouchEvent) {
+      const touch = e.changedTouches[0];
+      const dx = touch.clientX - touchStartX;
+      const dy = touch.clientY - touchStartY;
+
+      if (Math.abs(dx) < 30 && Math.abs(dy) < 30) return; // ignore tiny swipes
+
+      let direction: Direction | null = null;
+      if (Math.abs(dx) > Math.abs(dy)) {
+        direction = dx > 0 ? "right" : "left";
+      } else {
+        direction = dy > 0 ? "down" : "up";
+      }
+      if (
+        direction &&
+        !gameState.gameOver &&
+        !gameState.gameWon &&
+        !modal.show
+      ) {
+        handleMove(direction);
+      }
+    }
+
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
+    return () => {
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+    // gameState and modal as dependencies to respect current state
   }, [gameState, modal]);
 
   const handleMove = (direction: Direction) => {
@@ -152,8 +196,14 @@ const App: React.FC = () => {
       >
         2048: ICE EDITION
       </h1>
-
-      <div style={{ marginBottom: "1rem", display: "flex", alignItems: "center", gap: "1.2rem" }}>
+      <div
+        style={{
+          marginBottom: "1rem",
+          display: "flex",
+          alignItems: "center",
+          gap: "1.2rem",
+        }}
+      >
         <label htmlFor="boardSize" style={{ fontWeight: "700", color: "#3b6dbd" }}>
           Board Size:
         </label>
@@ -180,7 +230,6 @@ const App: React.FC = () => {
           }}
         />
       </div>
-
       <ScorePanel score={gameState.score} bestScore={gameState.bestScore} />
       <GameBoard board={gameState.board} />
       <ControlPanel onMove={handleMove} onRestart={handleRestart} />

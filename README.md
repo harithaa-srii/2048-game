@@ -70,3 +70,51 @@ npm run build
 ---
 
 ## Folder Structure (example)
+.
+├── dist/
+├── node_modules/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── ControlPanel.tsx
+│   │   ├── GameBoard.tsx
+│   │   ├── Modal.tsx
+│   │   ├── ScorePanel.tsx
+│   │   └── Tile.tsx
+│   ├── logic/
+│   │   ├── gameLogic.ts
+│   │   └── types.ts
+│   ├── App.tsx
+│   ├── index.css
+│   └── main.tsx
+├── .gitignore
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── README.md
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
+
+
+---
+
+## Deployment
+
+- For Vercel, Netlify, or GitHub Pages, use the built `/dist` folder.
+- See your deployment platform's docs for static site deployment from Vite.
+
+---
+
+## Contributing
+
+Feel free to fork, open issues, or submit pull requests for improvements and new features!
+
+---
+
+## License
+
+MIT

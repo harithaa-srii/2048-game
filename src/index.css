@@ -1,0 +1,200 @@
+@import "tailwindcss";
+
+:root {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* Light icy blue text for dark background */
+  color-scheme: light dark;
+  color: rgba(230, 245, 255, 0.9);
+  background-color: #d0e7f9; /* very pale icy blue */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: none;
+}
+
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  font-weight: 700;
+  color: #3b6dbd; /* deeper blue */
+}
+
+/* Link colors as icy blues */
+a {
+  font-weight: 600;
+  color: #74bdfd;
+  text-decoration: none;
+}
+a:hover {
+  color: #5196f4;
+}
+
+/* Button styling to match ice cube blocks */
+button {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 600;
+  font-family: inherit;
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: border-color 0.25s, background-color 0.25s;
+  box-shadow: 0 4px 10px rgb(163 217 255 / 0.4);
+  color: #21518c;
+}
+button:hover {
+  border-color: #5196f4;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Board and tiles styling will be handled in React components, but you can add common blending here */
+.ice-tile {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 8px 15px rgb(102 172 255 / 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #183d68;
+  font-weight: 700;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Dark mode adjustment */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: rgba(230, 245, 255, 0.9);
+    background-color: #1f2a44;
+  }
+  body {
+    background: linear-gradient(135deg, #182a4d, #0b1535);
+  }
+  button {
+    background-color: rgba(20, 30, 50, 0.6);
+    border: 1px solid rgba(100, 150, 255, 0.5);
+    box-shadow: 0 4px 10px rgb(100 150 255 / 0.4);
+    color: #c0d9ff;
+  }
+  button:hover {
+    border-color: #7eb4ff;
+    background-color: rgba(25, 40, 65, 0.8);
+  }
+}
+
+.game-wrapper {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #e3f6fd 70%, #d0eafd 100%);
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.game-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 430px;
+  padding: 1rem 1vw 2vw 1vw;
+  box-sizing: border-box;
+}
+
+.game-title {
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+  color: #3b6dbd;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+}
+
+.game-board-container {
+  background: linear-gradient(140deg, #eaf6ff 70%, #bcd9ff 120%);
+  border-radius: 26px;
+  border: 2.5px solid #b6d7f9;
+  box-shadow: 0 8px 54px 0 #b4d6ff88, 0 2px 10px #b2e6ff70;
+  padding: 18px;
+  max-width: 100vw;
+  margin: 2rem auto 1.5rem auto;
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(64px, 1fr));
+  grid-template-rows: repeat(4, minmax(64px, 1fr));
+  gap: 11px;
+  justify-items: center;
+  align-items: center;
+}
+
+.game-cell {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.tile-number {
+  color: #183d68;
+  font-weight: 700;
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  display: block;
+  text-align: center;
+  width: 100%;
+  user-select: none;
+}
+
+.score-panel {
+  display: flex;
+  gap: 12px;
+  margin: 8px 0 0 0;
+  font-weight: 700;
+}
+.score-pill {
+  background: rgba(242,247,255,0.8);
+  border-radius: 16px;
+  min-width: 80px;
+  padding: 7px 18px;
+  font-size: 1.1rem;
+  color: #3b6dbd;
+  box-shadow: 0 2px 9px #bcd9ff51;
+  border: 1.5px solid #e0efff;
+  text-align: center;
+}
+
+
+/* Responsive spacing and font resizing */
+@media (max-width: 400px) {
+  .game-inner {
+    max-width: 95vw;
+  }
+  .game-title {
+    font-size: 2rem;
+  }
+}

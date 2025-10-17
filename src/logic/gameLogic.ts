@@ -1,17 +1,9 @@
 import type { Board, TileValue, Direction } from "./types";
 
-/**
- * Creates an empty board of the given size.
- */
 export function createEmptyBoard(size: number): Board {
-  return Array.from({ length: size }, () =>
-    Array(size).fill(null)
-  );
+  return Array.from({ length: size }, () => Array(size).fill(null));
 }
 
-/**
- * Returns a list of empty cell coordinates.
- */
 function getEmptyCells(board: Board): [number, number][] {
   const emptyCells: [number, number][] = [];
   board.forEach((row, r) => {
@@ -22,9 +14,6 @@ function getEmptyCells(board: Board): [number, number][] {
   return emptyCells;
 }
 
-/**
- * Adds a 2 or 4 tile at a random empty position in the board.
- */
 export function addRandomTile(board: Board): Board {
   const emptyCells = getEmptyCells(board);
   if (emptyCells.length === 0) return board;
@@ -35,9 +24,6 @@ export function addRandomTile(board: Board): Board {
   return newBoard;
 }
 
-/**
- * Initializes a new board with two random tiles.
- */
 export function initializeBoard(size: number): Board {
   let board = createEmptyBoard(size);
   board = addRandomTile(board);
@@ -45,17 +31,11 @@ export function initializeBoard(size: number): Board {
   return board;
 }
 
-/**
- * Compresses a row by sliding non-null tiles to the left.
- */
 function slideRowLeft(row: TileValue[]): TileValue[] {
-  return row.filter(n => n !== null).concat(row.filter(n => n === null));
+  // Fixed with spread to keep type safety for null[] in result
+  return [...row.filter(n => n !== null), ...row.filter(n => n === null)];
 }
 
-/**
- * Merges a row with merging adjacent equal numbers.
- * Returns [newRow, scoreGained]
- */
 function mergeRow(row: TileValue[]): [TileValue[], number] {
   const newRow: TileValue[] = [];
   let score = 0;
@@ -74,13 +54,9 @@ function mergeRow(row: TileValue[]): [TileValue[], number] {
   return [newRow, score];
 }
 
-/**
- * Moves the board left. Returns [newBoard, scoreGained, isMoved].
- */
 function moveLeft(board: Board): [Board, number, boolean] {
   let score = 0;
   let isMoved = false;
-  const size = board.length;
 
   const newBoard: Board = board.map(row => {
     let compressed = slideRowLeft(row);
@@ -96,9 +72,6 @@ function moveLeft(board: Board): [Board, number, boolean] {
   return [newBoard, score, isMoved];
 }
 
-/**
- * Rotates the board clockwise 'times' times.
- */
 function rotateBoard(board: Board, times: number): Board {
   let newBoard = board;
   for (let t = 0; t < times; t++) {
@@ -109,10 +82,6 @@ function rotateBoard(board: Board, times: number): Board {
   return newBoard;
 }
 
-/**
- * Move the board in the given direction.
- * Returns [newBoard, scoreGained, isMoved]
- */
 export function move(board: Board, direction: Direction): [Board, number, boolean] {
   let rotatedBoard: Board;
   switch (direction) {
@@ -133,22 +102,14 @@ export function move(board: Board, direction: Direction): [Board, number, boolea
   }
 }
 
-/**
- * Check if the player has won by finding a 2048 tile.
- */
 export function checkWin(board: Board): boolean {
   return board.some(row => row.some(val => val === 2048));
 }
 
-/**
- * Check if any moves are possible, else game is over.
- */
 export function checkGameOver(board: Board): boolean {
-  // If empty cells, not over
   if (getEmptyCells(board).length > 0) return false;
 
   const size = board.length;
-  // Check horizontally and vertically for merges possible
   for (let r = 0; r < size; r++) {
     for (let c = 0; c < size; c++) {
       const current = board[r][c];
@@ -156,7 +117,7 @@ export function checkGameOver(board: Board): boolean {
         (c + 1 < size && board[r][c + 1] === current) ||
         (r + 1 < size && board[r + 1][c] === current)
       ) {
-        return false; // Merge possible
+        return false;
       }
     }
   }

@@ -70,35 +70,8 @@ npm run build
 ---
 
 ## Folder Structure (example)
-.
-├── dist/
-├── node_modules/
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   │   ├── ControlPanel.tsx
-│   │   ├── GameBoard.tsx
-│   │   ├── Modal.tsx
-│   │   ├── ScorePanel.tsx
-│   │   └── Tile.tsx
-│   ├── logic/
-│   │   ├── gameLogic.ts
-│   │   └── types.ts
-│   ├── App.tsx
-│   ├── index.css
-│   └── main.tsx
-├── .gitignore
-├── eslint.config.js
-├── index.html
-├── package-lock.json
-├── package.json
-├── README.md
-├── tsconfig.app.json
-├── tsconfig.json
-├── tsconfig.node.json
-└── vite.config.ts
 
+![Folder Structure](public/folder-structure.png)
 
 ---
 

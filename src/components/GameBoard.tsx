@@ -2,14 +2,14 @@ import React from "react";
 import type { Board } from "../logic/types";
 import Tile from "./Tile";
 
-// Styling constants
-const CELL_SIZE = 80;
+// Use clamp to adapt for mobile–desktop
+const CELL_SIZE = "clamp(38px, 10vw, 80px)";
 const GRID_GAP = 11;
 const OUTER_PAD = 18;
 
 const GameBoard: React.FC<{ board: Board }> = ({ board }) => {
-  const size = board.length; // dynamically detects board size
-  const gridSize = (CELL_SIZE * size) + (GRID_GAP * (size - 1)); // correct calculation for any grid
+  const size = board.length;
+  const gridSize = `calc((${CELL_SIZE} * ${size}) + (${GRID_GAP}px * ${size - 1}))`;
 
   return (
     <div
@@ -21,15 +21,18 @@ const GameBoard: React.FC<{ board: Board }> = ({ board }) => {
         border: "2.5px solid #b6d7f9",
         boxShadow: "0 8px 54px 0 #b4d6ff88, 0 2px 10px #b2e6ff70",
         display: "inline-block",
+        maxWidth: "100vw",
+        boxSizing: "border-box",
+        overflow: "hidden",
       }}
     >
       <div
         style={{
-          width: `${gridSize}px`,
-          height: `${gridSize}px`,
+          width: gridSize,
+          height: gridSize,
           display: "grid",
-          gridTemplateColumns: `repeat(${size}, ${CELL_SIZE}px)`,
-          gridTemplateRows: `repeat(${size}, ${CELL_SIZE}px)`,
+          gridTemplateColumns: `repeat(${size}, ${CELL_SIZE})`,
+          gridTemplateRows: `repeat(${size}, ${CELL_SIZE})`,
           gap: `${GRID_GAP}px`,
         }}
       >
@@ -41,8 +44,8 @@ const GameBoard: React.FC<{ board: Board }> = ({ board }) => {
               borderRadius: "16px",
               background: "rgba(255,255,255,0.68)",
               boxShadow: "0 2px 9px 1px #b7deff22",
-              width: `${CELL_SIZE}px`,
-              height: `${CELL_SIZE}px`,
+              width: CELL_SIZE,
+              height: CELL_SIZE,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",

@@ -1,73 +1,72 @@
-# React + TypeScript + Vite
+# 2048: ICE EDITION
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive, configurable web-based implementation of the classic 2048 game with smooth ice-themed UI. Built using React and TypeScript.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- Play the classic 2048 game on a configurable grid (4x4 to 8x8)
+- Clean, modern UI with ice-themed visuals and mobile responsiveness
+- Keyboard and button controls for moves
+- Dynamic board size selection
+- Score and best score tracking (local storage)
+- Restart and win/lose modal
+- Modular, maintainable codebase
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Clone the repository:**
+git clone https://github.com/harithaa-srii/2048-game.git
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+2. **Install dependencies:**
+npm install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+3. **Start development server:**
+npm run dev
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+4. **Build for production:**
+npm run build
+
+
+---
+
+## Running the Game
+
+- Visit `http://localhost:5173` (or your Vite port) in your browser after starting the dev server.
+- Select your preferred board size (between 4x4 and 8x8) using the input field at the top.
+- Start playing with the arrow keys or on-screen control buttons.
+- When the game ends (lose or win), a modal will provide feedback and let you restart.
+
+---
+
+## Gameplay Instructions
+
+- **Objective:** Merge tiles with the same number to reach 2048.
+- **Controls:**
+- **Arrow keys** or **UI buttons** to shift tiles in any direction.
+- Tiles merge when they are the same and adjacent, summing their value.
+- After every successful move, a new tile (2 or 4) appears at a random empty spot.
+- **Win:** Reach the 2048 tile.
+- **Lose:** No more moves left (board is filled and no merges possible).
+- **Restart:** Click "Restart" or interact with the modal after a win/lose.
+
+---
+
+## Implementation Details
+
+- **Tech Stack:** React, TypeScript, Vite, Tailwind/CSS.
+- **Functional Programming:** All board updates (`move`, `merge`, `new tile`) handled by pure functions.
+- **State Management:** Uses React state hooks for all game state, score, best score, and modal display.
+- **Responsiveness:** Grid and UI adapt automatically to the selected board size and screen dimensions.
+- **Code Modularity:** All UI and logic split across dedicated components. CSS classes used for clean presentation.
+- **Configurable board size:** Users can select any grid from 4x4 up to 8x8 before or during runtime.
+
+---
+
+## Folder Structure (example)

@@ -220,7 +220,8 @@ const App: React.FC = () => {
           style={{
             width: "4.5rem",
             fontWeight: "700",
-            padding: "0.3rem",
+            fontSize: "1rem",
+            padding: "0.5rem",
             borderRadius: "8px",
             border: "1.5px solid #b3d3fb",
             textAlign: "center",

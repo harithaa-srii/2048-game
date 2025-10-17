@@ -1,114 +1,43 @@
-@import "tailwindcss";
-
+/* ==============================
+   GLOBAL STYLING
+   ============================== */
 :root {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --bg-light: #e3f6fd;
+  --bg-gradient: linear-gradient(135deg, #e3f6fd 70%, #d0eafd 100%);
+  --tile-base: rgba(255, 255, 255, 0.65);
+  --tile-border: #d6eaff;
+  --tile-shadow: 0 2px 9px 1px #b7deff22;
+  --blue-accent: #3b6dbd;
+  --blue-accent-deep: #21518c;
+  --ice-border: #b6d7f9;
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-  /* Light icy blue text for dark background */
-  color-scheme: light dark;
-  color: rgba(230, 245, 255, 0.9);
-  background-color: #d0e7f9; /* very pale icy blue */
+  /* Responsive board sizing */
+  --max-board-size: 440px;
+  --mobile-board-size: 94vw;
+}
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  background: var(--bg-gradient);
+  color: var(--blue-accent);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
 
-
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  background: none;
-}
-
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-  font-weight: 700;
-  color: #3b6dbd; /* deeper blue */
-}
-
-/* Link colors as icy blues */
-a {
-  font-weight: 600;
-  color: #74bdfd;
-  text-decoration: none;
-}
-a:hover {
-  color: #5196f4;
-}
-
-/* Button styling to match ice cube blocks */
-button {
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 600;
-  font-family: inherit;
-  background-color: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(6px);
-  cursor: pointer;
-  transition: border-color 0.25s, background-color 0.25s;
-  box-shadow: 0 4px 10px rgb(163 217 255 / 0.4);
-  color: #21518c;
-}
-button:hover {
-  border-color: #5196f4;
-  background-color: rgba(255, 255, 255, 0.8);
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-/* Board and tiles styling will be handled in React components, but you can add common blending here */
-.ice-tile {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 16px;
-  box-shadow: 0 8px 15px rgb(102 172 255 / 0.5);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #183d68;
-  font-weight: 700;
-  font-size: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Dark mode adjustment */
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: rgba(230, 245, 255, 0.9);
-    background-color: #1f2a44;
-  }
-  body {
-    background: linear-gradient(135deg, #182a4d, #0b1535);
-  }
-  button {
-    background-color: rgba(20, 30, 50, 0.6);
-    border: 1px solid rgba(100, 150, 255, 0.5);
-    box-shadow: 0 4px 10px rgb(100 150 255 / 0.4);
-    color: #c0d9ff;
-  }
-  button:hover {
-    border-color: #7eb4ff;
-    background-color: rgba(25, 40, 65, 0.8);
-  }
-}
-
+/* ==============================
+   LAYOUT
+   ============================== */
 .game-wrapper {
   min-height: 100vh;
-  width: 100vw;
   display: flex;
-  justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #e3f6fd 70%, #d0eafd 100%);
+  justify-content: center;
   padding: 1rem;
   box-sizing: border-box;
 }
@@ -118,114 +47,313 @@ button:focus-visible {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 430px;
-  padding: 1rem 1vw 2vw 1vw;
+  max-width: var(--max-board-size);
+  padding: 1rem;
   box-sizing: border-box;
 }
 
+/* ==============================
+   TITLE & SCORE
+   ============================== */
 .game-title {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.6rem 0;
   text-align: center;
-  color: #3b6dbd;
   font-weight: 800;
-  letter-spacing: 1.5px;
-  font-size: clamp(1.8rem, 4vw, 3.2rem);
-}
-
-.game-board-container {
-  background: linear-gradient(140deg, #eaf6ff 70%, #bcd9ff 120%);
-  border-radius: 26px;
-  border: 2.5px solid #b6d7f9;
-  box-shadow: 0 8px 54px 0 #b4d6ff88, 0 2px 10px #b2e6ff70;
-  padding: 18px;
-  margin: 2rem auto 1.5rem auto;
-  max-width: 400px;           /* For desktop large screens */
-  width: 96vw;                /* For small screens, fits nearly entire width */
-  margin: auto;
-  box-sizing: border-box;
-}
-
-.game-board {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(64px, 1fr));
-  grid-template-rows: repeat(4, minmax(64px, 1fr));
-  gap: 11px;
-  justify-items: center;
-  align-items: center;
-}
-
-.game-cell {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-.tile-number {
-  color: #183d68;
-  font-weight: 700;
-  font-size: clamp(1.4rem, 4vw, 2rem);
-  display: block;
-  text-align: center;
-  width: 100%;
-  user-select: none;
+  color: var(--blue-accent);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  letter-spacing: 1px;
 }
 
 .score-panel {
   display: flex;
-  gap: 12px;
-  margin: 8px 0 0 0;
-  font-weight: 700;
+  gap: 10px;
+  margin-bottom: 10px;
 }
+
 .score-pill {
-  background: rgba(242,247,255,0.8);
-  border-radius: 16px;
-  min-width: 80px;
-  padding: 7px 18px;
-  font-size: 1.1rem;
-  color: #3b6dbd;
-  box-shadow: 0 2px 9px #bcd9ff51;
+  background: rgba(242,247,255,0.85);
+  border-radius: 14px;
+  padding: 10px 16px;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: var(--blue-accent);
+  font-weight: 700;
   border: 1.5px solid #e0efff;
+  box-shadow: 0 2px 9px #bcd9ff51;
+  min-width: 80px;
   text-align: center;
 }
 
-@media (max-width: 500px) {
-  .game-board-container {
-    max-width: 98vw;
-    padding: 2vw;
-  }
+/* ==============================
+   BOARD
+   ============================== */
+.game-board-container {
+  background: linear-gradient(140deg, #eaf6ff 70%, #bcd9ff 120%);
+  border-radius: 24px;
+  border: 2.5px solid var(--ice-border);
+  box-shadow: 0 8px 54px 0 #b4d6ff88, 0 2px 10px #b2e6ff70;
+  padding: clamp(8px, 2vw, 14px);
+  width: min(var(--mobile-board-size), var(--max-board-size));
+  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
+  transition: width 0.25s ease, height 0.25s ease;
 }
 
 .game-board-grid {
   display: grid;
-  gap: 10px;
-  width: 100%;
-  aspect-ratio: 1/1;          /* Keeps square */
-  grid-template-columns: repeat(var(--size), 1fr);
-  grid-template-rows: repeat(var(--size), 1fr);
-}
-
-.game-cell {
-  border: 2px solid #d6eaff;
-  border-radius: 16px;
-  background: rgba(255,255,255,0.68);
-  box-shadow: 0 2px 9px 1px #b7deff22;
   width: 100%;
   height: 100%;
+  grid-template-columns: repeat(var(--size, 4), 1fr);
+  grid-template-rows: repeat(var(--size, 4), 1fr);
+  gap: clamp(6px, 2vw, 12px);
+}
+
+/* ==============================
+   CELLS & TILES
+   ============================== */
+.game-cell {
+  background: var(--tile-base);
+  border: 2px solid var(--tile-border);
+  border-radius: 16px;
+  box-shadow: var(--tile-shadow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  overflow: hidden;
+}
+
+/* --- TILE FONT FIX --- */
+.tile-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  color: var(--blue-accent-deep);
+  /* Scales text with cell size dynamically */
+  font-size: clamp(1.4rem, calc(2.8vw + 0.5rem), 2.6rem);
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  transition: background 0.16s ease, color 0.16s ease, transform 0.12s ease;
+  line-height: 1;
+}
+
+.tile-number:active {
+  transform: scale(0.95);
+}
+
+/* ==============================
+   CONTROLS
+   ============================== */
+button {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 0.6em 1.2em;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  font-weight: 600;
+  font-family: inherit;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: border-color 0.25s, background-color 0.25s, transform 0.12s ease;
+  box-shadow: 0 4px 10px rgb(163 217 255 / 0.4);
+  color: var(--blue-accent-deep);
+  min-width: 50px;
+  touch-action: manipulation;
+}
+
+button:hover {
+  border-color: #5196f4;
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+.control-panel {
+  margin-top: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ==============================
+   MODAL
+   ============================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(44, 68, 107, 0.28);
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 999;
+  backdrop-filter: blur(4px);
 }
 
+.modal-box {
+  background: rgba(255,255,255,0.97);
+  border-radius: 24px;
+  padding: 34px 44px;
+  box-shadow: 0 8px 38px #b4d6ff77;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 260px;
+  text-align: center;
+}
 
-/* Responsive spacing and font resizing */
-@media (max-width: 400px) {
+.modal-box h2 {
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: var(--blue-accent);
+  margin-bottom: 18px;
+}
+
+/* ==============================
+   DARK MODE
+   ============================== */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: linear-gradient(135deg, #182a4d, #0b1535);
+    color: #c0d9ff;
+  }
+  .game-board-container {
+    background: linear-gradient(140deg, #273f67 60%, #1a2c52 100%);
+    border-color: #466ea7;
+    box-shadow: 0 8px 40px #294d7e55;
+  }
+  .tile-number {
+    color: #eaf3ff;
+  }
+  button {
+    background-color: rgba(25, 40, 65, 0.6);
+    color: #c0d9ff;
+  }
+  button:hover {
+    background-color: rgba(35, 50, 75, 0.8);
+    border-color: #7eb4ff;
+  }
+}
+
+/* ==============================
+   RESPONSIVE TWEAKS - MOBILE & TABLET
+   ============================== */
+
+/* Base responsive adjustments under 500px */
+@media (max-width: 500px) {
   .game-inner {
-    max-width: 95vw;
+    padding: 0.5rem;
   }
-  .game-title {
-    font-size: 2rem;
+
+  .game-board-container {
+    width: 94vw;                 /* fluid width */
+    max-width: 100%;              /* ensures it never overflows */
+    padding: clamp(6px, 3vw, 10px);
+    border-radius: 20px;
   }
+
+  .game-board-grid {
+    gap: clamp(4px, 2vw, 8px);
+  }
+
+  .tile-number {
+    font-size: clamp(1rem, 5vw, 2rem); /* scales dynamically with screen */
+  }
+
+  .score-panel {
+    gap: 8px;
+  }
+
+  button {
+    padding: 0.5em 1em;
+    min-width: 44px;
+    font-size: clamp(0.8rem, 2.5vw, 1rem);
+  }
+}
+
+/* Smaller mobile devices - under 400px */
+@media (max-width: 400px) {
+  .game-board-container {
+    width: 92vw;
+    padding: clamp(4px, 2.5vw, 8px);
+  }
+
+  .game-board-grid {
+    gap: clamp(3px, 1.5vw, 6px);
+  }
+
+  .tile-number {
+    font-size: clamp(0.9rem, 4.5vw, 1.8rem);
+  }
+
+  .score-pill {
+    font-size: clamp(0.8rem, 3.5vw, 1rem);
+    padding: 4px 10px;
+  }
+}
+
+/* Ultra-small screens - under 350px */
+@media (max-width: 350px) {
+  .game-board-container {
+    width: 90vw;
+    padding: clamp(3px, 2vw, 6px);
+  }
+
+  .game-board-grid {
+    gap: clamp(2px, 1.5vw, 5px);
+  }
+
+  .tile-number {
+    font-size: clamp(0.8rem, 4vw, 1.6rem);
+  }
+
+  .score-pill {
+    font-size: 0.75rem;
+    padding: 3px 8px;
+  }
+
+  button {
+    padding: 0.4em 0.9em;
+    min-width: 40px;
+  }
+}
+
+/* Tablet landscape - 500px to 768px */
+@media (min-width: 501px) and (max-width: 768px) {
+  .game-board-container {
+    width: min(90vw, 380px);       /* smooth scaling */
+    padding: clamp(6px, 2vw, 12px);
+  }
+
+  .game-board-grid {
+    gap: clamp(5px, 2vw, 10px);
+  }
+
+  .tile-number {
+    font-size: clamp(1.2rem, 3vw, 2.2rem);
+  }
+
+  .score-pill {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    padding: 5px 12px;
+  }
+
+  button {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+  }
+}
+
+/* Ensures square cells with fluid sizing */
+.game-board-container,
+.game-board-grid {
+  width: 100%;
+  aspect-ratio: 1 / 1;           /* keeps board square on any device */
+}
+
+.game-board-grid {
+  grid-template-columns: repeat(var(--size, 4), 1fr);
+  grid-template-rows: repeat(var(--size, 4), 1fr);
 }
